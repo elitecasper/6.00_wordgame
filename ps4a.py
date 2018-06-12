@@ -150,8 +150,11 @@ def updateHand(hand, word):
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     """
-    # TO DO ... <-- Remove this comment when you code this function
-
+    copy = {k:v for (k,v) in hand.items()}
+    for letter in word:
+        if copy[letter] != 0:
+           copy[letter] -= 1 
+    return copy
 
 
 #
@@ -168,24 +171,17 @@ def isValidWord(word, hand, wordList):
     hand: dictionary (string -> int)
     wordList: list of lowercase strings
     """
-    # TO DO ... <-- Remove this comment when you code this function
-
-def isValid(w,h,l):
-    handOrig = getFrequencyDict(w)
+    handOrig = getFrequencyDict(word)
     handCopy = handOrig.copy()
-    if not w in l:
+    if not word in wordList:
         return False
-    for letter in w:
-        if not letter in h.keys():
+    for letter in word:
+        if not letter in hand.keys():
             return False
-    if any(handCopy[k] > h[k] for k in handCopy.keys()):
+    if any(handCopy[k] > hand[k] for k in handCopy.keys()):
         return False
     return True
 
-h = {'n': 1, 'h': 1, 'o': 1, 'y': 1, 'd':1, 'w':1, 'e': 2, 'm': 3, 'a': 2}
-w = "mama"
-
-print(isValid(w,h,wordList))
 
 #
 # Problem #4: Playing a hand
@@ -268,7 +264,7 @@ def playHand(hand, wordList, n):
 
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
     if given_word == '.' :
-        print("Goodbye! Total score:" + str(total_score) + "points.")
+        print("Goodbye! Total score: " + str(total_score) + " points.")
     if calculateHandlen(hand) == 0:
         print("Run out of letters. Total score:" + str(total_score) + "points.")
 
